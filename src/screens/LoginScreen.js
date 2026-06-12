@@ -2,168 +2,264 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
-  Image,
-  StatusBar
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
-export default function LoginScreen({ navigation }) {
+import { LinearGradient } from 'expo-linear-gradient';
+import { AntDesign } from '@expo/vector-icons';
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+import COLORS from '../theme/colors';
+import PrimaryButton from '../components/PrimaryButton';
+import CustomInput from '../components/CustomInput';
+
+export default function LoginScreen() {
+  const [phone, setPhone] = useState('');
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#F8FAFC', '#EEFDF3']}
+      style={styles.container}
+    >
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.hero}>
+          <View style={styles.logoCircle}>
+            <Text style={styles.logoText}>⚽</Text>
+          </View>
 
-      <StatusBar backgroundColor="#0f172a" barStyle="light-content" />
-
-      <View style={styles.topSection}>
-        <Text style={styles.logo}>⚽</Text>
-
-        <Text style={styles.heading}>
-          Turf Booking
-        </Text>
-
-        <Text style={styles.subHeading}>
-          Book your favourite turf instantly
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-
-        <Text style={styles.loginText}>
-          Login
-        </Text>
-
-        <TextInput
-          placeholder="Enter Email"
-          placeholderTextColor="#888"
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-        />
-
-        <TextInput
-          placeholder="Enter Password"
-          placeholderTextColor="#888"
-          secureTextEntry
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-        />
-
-        <TouchableOpacity style={styles.forgotButton}>
-          <Text style={styles.forgotText}>
-            Forgot Password?
+          <Text style={styles.brand}>
+            TurfBook
           </Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => navigation.navigate('Home')}
-        >
-          <Text style={styles.loginButtonText}>
-            Login
+          <Text style={styles.heroText}>
+            FIND • BOOK • PLAY
           </Text>
-        </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Signup')}
-        >
-          <Text style={styles.signupText}>
-            Don't have an account? Sign Up
+        <View style={styles.card}>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>
+              🔥 NEW SEASON
+            </Text>
+          </View>
+
+          <Text style={styles.heading}>
+            Join The Game
           </Text>
-        </TouchableOpacity>
 
-      </View>
+          <Text style={styles.subHeading}>
+            Book premium sports turfs instantly.
+          </Text>
 
-    </View>
+          <View style={styles.offerCard}>
+            <Text style={styles.offerTitle}>
+              🎉 Welcome Offer
+            </Text>
+
+            <Text style={styles.offerSubtitle}>
+              Get 20% OFF on your first turf booking.
+            </Text>
+          </View>
+
+          <CustomInput
+            placeholder="+91 Enter Phone Number"
+            value={phone}
+            onChangeText={setPhone}
+          />
+
+          <View style={{ height: 20 }} />
+
+          <PrimaryButton
+            title="Continue"
+            onPress={() => {}}
+          />
+
+          <View style={styles.dividerContainer}>
+            <View style={styles.line} />
+
+            <Text style={styles.dividerText}>
+              OR
+            </Text>
+
+            <View style={styles.line} />
+          </View>
+
+          <TouchableOpacity style={styles.googleButton}>
+            <AntDesign
+              name="google"
+              size={22}
+              color="#EA4335"
+            />
+
+            <Text style={styles.googleText}>
+              Continue with Google
+            </Text>
+          </TouchableOpacity>
+
+          <Text style={styles.footer}>
+            By continuing, you agree to our
+            <Text style={styles.link}>
+              {' '}Terms & Privacy Policy
+            </Text>
+          </Text>
+        </View>
+      </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
-    backgroundColor: '#0f172a',
-    justifyContent: 'center',
-    padding: 20
   },
 
-  topSection: {
+  hero: {
     alignItems: 'center',
-    marginBottom: 40
+    marginTop: 80,
   },
 
-  logo: {
-    fontSize: 70,
-    marginBottom: 10
+  logoCircle: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    backgroundColor: '#FFF7ED',
+    borderWidth: 3,
+    borderColor: COLORS.accent,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
-  heading: {
-    fontSize: 34,
-    color: '#fff',
-    fontWeight: 'bold'
+  logoText: {
+    fontSize: 55,
   },
 
-  subHeading: {
-    color: '#cbd5e1',
-    marginTop: 5,
-    fontSize: 16
+  brand: {
+    color: COLORS.text,
+    fontSize: 38,
+    fontWeight: '900',
+    marginTop: 15,
+  },
+
+  heroText: {
+    color: COLORS.accent,
+    marginTop: 8,
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 3,
   },
 
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 25,
-    padding: 25
+    flex: 1,
+    marginTop: 40,
+    backgroundColor: COLORS.card,
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
+    padding: 24,
+
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 8,
   },
 
-  loginText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 25,
-    color: '#0f172a',
-    textAlign: 'center'
+  badge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(245,158,11,0.15)',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
 
-  input: {
-    backgroundColor: '#f1f5f9',
+  badgeText: {
+    color: COLORS.accent,
+    fontWeight: '700',
+  },
+
+  heading: {
+    color: COLORS.text,
+    fontSize: 32,
+    fontWeight: '900',
+    marginTop: 20,
+  },
+
+  subHeading: {
+    color: COLORS.textSecondary,
+    fontSize: 16,
+    marginTop: 8,
+    marginBottom: 24,
+  },
+
+  offerCard: {
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1,
+    borderColor: '#FCD34D',
+    borderRadius: 16,
     padding: 15,
-    borderRadius: 12,
-    marginBottom: 18,
-    fontSize: 16
+    marginBottom: 20,
   },
 
-  forgotButton: {
-    alignItems: 'flex-end',
-    marginBottom: 20
+  offerTitle: {
+    color: COLORS.accent,
+    fontWeight: '800',
+    fontSize: 16,
   },
 
-  forgotText: {
-    color: '#2563eb',
-    fontWeight: '600'
+  offerSubtitle: {
+    color: COLORS.text,
+    marginTop: 6,
+    fontSize: 14,
   },
 
-  loginButton: {
-    backgroundColor: '#22c55e',
-    padding: 16,
-    borderRadius: 12
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 25,
   },
 
-  loginButtonText: {
-    color: '#fff',
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#E2E8F0',
+  },
+
+  dividerText: {
+    marginHorizontal: 15,
+    color: COLORS.textSecondary,
+    fontWeight: '600',
+  },
+
+  googleButton: {
+    height: 60,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  googleText: {
+    color: COLORS.text,
+    marginLeft: 10,
+    fontWeight: '700',
+    fontSize: 16,
+  },
+
+  footer: {
+    color: COLORS.textSecondary,
     textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 18
+    marginTop: 30,
+    lineHeight: 22,
   },
 
-  signupText: {
-    marginTop: 25,
-    textAlign: 'center',
-    color: '#475569',
-    fontWeight: '600'
-  }
-
+  link: {
+    color: COLORS.accent,
+    fontWeight: '700',
+  },
 });
