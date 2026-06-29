@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -15,7 +16,7 @@ import COLORS from '../theme/colors';
 import PrimaryButton from '../components/PrimaryButton';
 import CustomInput from '../components/CustomInput';
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [phone, setPhone] = useState('');
 
   return (
@@ -27,87 +28,89 @@ export default function LoginScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
       >
-        <View style={styles.hero}>
-          <View style={styles.logoCircle}>
-            <Text style={styles.logoText}>⚽</Text>
-          </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          <View style={styles.hero}>
+            <View style={styles.logoCircle}>
+              <Text style={styles.logoText}>⚽</Text>
+            </View>
 
-          <Text style={styles.brand}>
-            TurfBook
-          </Text>
+            <Text style={styles.brand}>TurfBook</Text>
 
-          <Text style={styles.heroText}>
-            FIND • BOOK • PLAY
-          </Text>
-        </View>
-
-        <View style={styles.card}>
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>
-              🔥 NEW SEASON
+            <Text style={styles.heroText}>
+              FIND • BOOK • PLAY
             </Text>
           </View>
 
-          <Text style={styles.heading}>
-            Join The Game
-          </Text>
-
-          <Text style={styles.subHeading}>
-            Book premium sports turfs instantly.
-          </Text>
-
-          <View style={styles.offerCard}>
-            <Text style={styles.offerTitle}>
-              🎉 Welcome Offer
+          <View style={styles.card}>
+            <Text style={styles.heading}>
+              Join The Game
             </Text>
 
-            <Text style={styles.offerSubtitle}>
-              Get 20% OFF on your first turf booking.
-            </Text>
-          </View>
-
-          <CustomInput
-            placeholder="+91 Enter Phone Number"
-            value={phone}
-            onChangeText={setPhone}
-          />
-
-          <View style={{ height: 20 }} />
-
-          <PrimaryButton
-            title="Continue"
-            onPress={() => {}}
-          />
-
-          <View style={styles.dividerContainer}>
-            <View style={styles.line} />
-
-            <Text style={styles.dividerText}>
-              OR
+            <Text style={styles.subHeading}>
+              Book premium sports turfs instantly.
             </Text>
 
-            <View style={styles.line} />
-          </View>
+            <View style={styles.offerCard}>
+              <Text style={styles.offerTitle}>
+                🎉 Welcome Offer
+              </Text>
 
-          <TouchableOpacity style={styles.googleButton}>
-            <AntDesign
-              name="google"
-              size={22}
-              color="#EA4335"
+              <Text style={styles.offerSubtitle}>
+                Get 20% OFF on your first turf booking.
+              </Text>
+            </View>
+
+            <CustomInput
+              placeholder="+91 Enter Phone Number"
+              value={phone}
+              onChangeText={setPhone}
             />
 
-            <Text style={styles.googleText}>
-              Continue with Google
-            </Text>
-          </TouchableOpacity>
+            <View style={{ height: 20 }} />
 
-          <Text style={styles.footer}>
-            By continuing, you agree to our
-            <Text style={styles.link}>
-              {' '}Terms & Privacy Policy
+            <PrimaryButton
+              title="Continue"
+              onPress={() => navigation.replace('Home')}
+            />
+
+            <View style={styles.dividerContainer}>
+              <View style={styles.line} />
+              <Text style={styles.dividerText}>OR</Text>
+              <View style={styles.line} />
+            </View>
+
+            <TouchableOpacity
+              style={styles.signupButton}
+              onPress={() => navigation.navigate('Signup')}
+            >
+              <Text style={styles.signupText}>
+                Create New Account
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.googleButton}>
+              <AntDesign
+                name="google"
+                size={22}
+                color="#EA4335"
+              />
+
+              <Text style={styles.googleText}>
+                Continue with Google
+              </Text>
+            </TouchableOpacity>
+
+            <Text style={styles.footer}>
+              By continuing, you agree to our
+              <Text style={styles.link}>
+                {' '}Terms & Privacy Policy
+              </Text>
             </Text>
-          </Text>
-        </View>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -160,31 +163,16 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
     padding: 24,
-
     shadowColor: '#000',
     shadowOpacity: 0.08,
     shadowRadius: 12,
     elevation: 8,
   },
 
-  badge: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'rgba(245,158,11,0.15)',
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-
-  badgeText: {
-    color: COLORS.accent,
-    fontWeight: '700',
-  },
-
   heading: {
     color: COLORS.text,
     fontSize: 32,
     fontWeight: '900',
-    marginTop: 20,
   },
 
   subHeading: {
@@ -233,11 +221,26 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
+  signupButton: {
+    height: 58,
+    borderRadius: 18,
+    backgroundColor: COLORS.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  signupText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+
   googleButton: {
+    marginTop: 15,
     height: 60,
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: '#E2E8F0',
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -255,6 +258,7 @@ const styles = StyleSheet.create({
     color: COLORS.textSecondary,
     textAlign: 'center',
     marginTop: 30,
+    marginBottom: 30,
     lineHeight: 22,
   },
 
