@@ -1,10 +1,10 @@
-const SPACING = {
-  xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
-  xxl: 48,
+const TYPOGRAPHY = {
+  title: 36,
+  heading: 28,
+  subHeading: 20,
+  body: 16,
+  caption: 14,
+  small: 12,
 };
 
-export default SPACING;
+export default TYPOGRAPHY;
